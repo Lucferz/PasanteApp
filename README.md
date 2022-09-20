@@ -1,6 +1,10 @@
-# pasante_app
+# PasanteApp
 
-A new Flutter project.
+Un proyecto que pretende hacer que los estudiantes se conecten con empresas para facilitar su integracion
+laboral mediante la realizacion de pasantias o internships, o tambien ayudarlos a cubrir algun requerimiento 
+academico mediante las mismas. Asi como tambien proveer a las empresas en busca de talentos jovenes una 
+herramienta para poder realizar convocatorias mas facilmente y dar con mas publico de una manera practica
+y sencilla
 
 ## Getting Started
 
