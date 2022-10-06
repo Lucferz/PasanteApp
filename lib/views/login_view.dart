@@ -24,12 +24,16 @@ class _loginForm extends StatelessWidget {
     return Container(
       child: Form(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(height: 50,),
-            Center(
-              child: Image.asset('img/logo_inicio.PNG'),
+            //SizedBox(height: 50,),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+              child: Center(
+                child: Image.asset('img/logo_inicio.PNG'),
+              ),
             ),
-            SizedBox(height: 200,),
+            //SizedBox(height: 200,),
             Container(
               width: 350,
               child: Column(
@@ -57,45 +61,59 @@ class _loginForm extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 100,),
-            MaterialButton(
-              onPressed: () {
-                print('Se quiso loguear');
-              },
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              minWidth: 300,
-              elevation: 0,
-              color: Colors.blueGrey[200],
+            //SizedBox(height: 100,),
+            Padding(
+             padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                child: Text(
-                  'Ingresar', 
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 15,),
-            MaterialButton(
-              onPressed: () {
-                print('Se quiso registrar');
-              },
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              minWidth: 300,
-              elevation: 0,
-              color: Colors.blueGrey[200],
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                child: Text(
-                  'Registrarse', 
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+                child: Column(
+                  children: [
+                    MaterialButton(
+                      onPressed: () {
+                        print('Se quiso loguear');
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      minWidth: 300,
+                      elevation: 0,
+                      color: Colors.blueGrey[200],
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                        child: Text(
+                          'Ingresar', 
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15,),
+                    MaterialButton(
+                      onPressed: () {
+                        print('Va al primer paso de registro');
+                        Navigator.pushNamed(context, 'register_step1');
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      hoverColor: Colors.transparent,
+                      hoverElevation: 0,
+                      minWidth: 300,
+                      elevation: 0,
+                      color: Colors.transparent,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                        child: Text(
+                          'Registrarse', 
+                          style: TextStyle(
+                            fontSize: 18,
+                            decoration: TextDecoration.underline,
+                            decorationThickness: double.parse('1.5'),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

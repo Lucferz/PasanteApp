@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'login':( _ ) => LoginView(),
         'feed':( _ ) => FeedView(),
+        'register_step1': (context) => RegisterViewFirstStep(),
       },
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.grey[200],
