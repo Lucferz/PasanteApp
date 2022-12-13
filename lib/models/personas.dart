@@ -18,13 +18,13 @@ class Personas {
 
   Personas({
     this.per_id,
-    required this.per_nombre,
+    this.per_nombre,
     required this.per_email,
     required this.per_senha,
     this.per_usuario,
     this.per_bio,
     this.per_barrio,
-    required this.per_telefono,
+    this.per_telefono,
     this.per_website,
     this.per_estado,
   });
