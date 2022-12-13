@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class PersonasTipo {
-  int? pt_id;
+  dynamic? pt_id;
   String pt_tipo;
 
   PersonasTipo({

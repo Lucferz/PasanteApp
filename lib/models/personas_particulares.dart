@@ -2,17 +2,17 @@ import 'dart:convert';
 import 'package:pasante_app/models/models.dart';
 
 class PersonasParticulares {
-  int? perpar_id;
+  dynamic? perpar_id;
   Personas fk_persona;
   PersonasTipo fk_per_tipo;
-  Map<String, dynamic> perpar_competencias;
+  Map<String, dynamic>? perpar_competencias;
   String? perpar_ci;
 
   PersonasParticulares({
     this.perpar_id,
     required this.fk_persona,
     required this.fk_per_tipo,
-    required this.perpar_competencias,
+    this.perpar_competencias,
     this.perpar_ci,
   });
 
@@ -29,8 +29,8 @@ class PersonasParticulares {
 
   Map <String, dynamic> toMap() => {
     "perpar_id": this.perpar_id,
-    "fk_persona": this.fk_persona,
-    "fk_per_tipo": this.fk_per_tipo,
+    "fk_persona": this.fk_persona.toMap(),
+    "fk_per_tipo": this.fk_per_tipo.toMap(),
     "perpar_competencias":this.perpar_competencias ,
     "perpar_ci": this.perpar_ci,
   };

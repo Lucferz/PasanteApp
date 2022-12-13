@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'login',
       routes: {
         'login':( _ ) => LoginView(),
-        'feed':( _ ) => FeedView(),
+        'feed':( _ ) => FeedView(theUser: null),
         'register_step1': (context) => RegisterViewFirstStep(),
       },
       theme: ThemeData.light().copyWith(

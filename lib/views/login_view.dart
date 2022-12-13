@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pasante_app/services/services.dart';
+import 'package:provider/provider.dart';
 
 import '../ui/input_decoration.dart';
 
@@ -16,9 +18,15 @@ class LoginView extends StatelessWidget {
   }
 }
 
-class _loginForm extends StatelessWidget {
-  //const _loginForm({Key? key}) : super(key: key);
+class _loginForm extends StatefulWidget {
+  @override
+  State<_loginForm> createState() => _loginFormState();
+}
 
+class _loginFormState extends State<_loginForm> {
+  //const _loginForm({Key? key}) : super(key: key);
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,6 +54,7 @@ class _loginForm extends StatelessWidget {
                       labelText: "Correo Electronico",
                       prefixIcon: Icons.alternate_email_sharp,
                     ),
+                    controller: emailController,
                   ),
                   SizedBox(height: 35,),
                   TextFormField(
@@ -57,6 +66,7 @@ class _loginForm extends StatelessWidget {
                       labelText: "Contraseña",
                       prefixIcon: Icons.lock,
                     ),
+                    controller: passController,
                   ),
                 ],
               ),
@@ -68,8 +78,20 @@ class _loginForm extends StatelessWidget {
                 child: Column(
                   children: [
                     MaterialButton(
-                      onPressed: () {
-                        print('Se quiso loguear');
+                      onPressed: () async {
+                        final authService = Provider.of<AuthService>(context, listen: false);
+                        if (emailController.text != null && passController.text != null){
+                          final String? errMsg = await authService.login(emailController.text, passController.text);
+                          // final Personas person = personaService.getPersonaByEmail(emailController.text);
+                          // final dynamic theUser = personaService.getUserByPersona(person);
+                          if ( errMsg == null){
+                            Navigator.popAndPushNamed(
+                              context, 
+                              'feed', 
+                              // arguments: theUser
+                            );
+                          }
+                        }
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),

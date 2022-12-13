@@ -6,7 +6,7 @@ class Postulaciones {
 /* se van a ver de manera filtrada, los postulantes van a ver todas las 
 postulaciones filtradas por su usuario y las empresas pueden ver todas
 las postulaciones por el codigo unico de la convocatoria*/
-  int? pos_id;
+  dynamic? pos_id;
   PersonasParticulares fk_persona;
   Convocatorias fk_convocatoria;
   String pos_codigo;

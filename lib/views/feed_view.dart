@@ -1,28 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:pasante_app/models/models.dart';
+import 'package:pasante_app/services/services.dart';
+import 'package:provider/provider.dart';
 
 class FeedView extends StatelessWidget {
   //const FeedView({Key? key}) : super(key: key);
+  final dynamic theUser;
+  String? tipo_user;
+  FeedView({
+    super.key,
+    required this.theUser, 
+  }): tipo_user = theUser?.fk_per_tipo?.pt_tipo;
+
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: _feed_view(),
+      child:tipo_user == 'particular'? _feed_view_particular():tipo_user == 'empresa'?_feed_view_empresarial(): _error_view(),
     );
   }
 }
 
-class _feed_view extends StatelessWidget {
-  const _feed_view({Key? key}) : super(key: key);
-
+class _feed_view_particular extends StatelessWidget {
+  const _feed_view_particular({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pagina de Inicio'),
+        title: Text('Inicio'),
         actions: [
           IconButton(
             onPressed: () {
-              //authService.logout();
+              final authService = Provider.of<AuthService>(context, listen: false);
+              authService.logout();
               Navigator.pushReplacementNamed(context, 'login')              ;
             }, 
             icon: Icon(Icons.login_outlined),
@@ -46,6 +56,63 @@ class _feed_view extends StatelessWidget {
           // productService.selectedProduct = new Productos(available: false, name: '', price: 0);
           Navigator.pushNamed(context, 'product');
         },
+      ),
+    );
+  }
+}
+
+class _feed_view_empresarial extends StatelessWidget {
+const _feed_view_empresarial({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Inicio'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              final authService = Provider.of<AuthService>(context, listen: false);
+              authService.logout();
+              Navigator.pushReplacementNamed(context, 'login')              ;
+            }, 
+            icon: Icon(Icons.login_outlined),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        // itemCount: productService.productos.length,
+        itemBuilder: (
+          BuildContext context, int index)=> GestureDetector(
+            onTap: () {
+              // productService.selectedProduct = productService.productos[index].copy();
+              Navigator.pushNamed(context, 'product');
+            },
+          //child: ProductCard(producto: productService.productos[index],),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          // productService.selectedProduct = new Productos(available: false, name: '', price: 0);
+          Navigator.pushNamed(context, 'product');
+        },
+      ),
+    );
+  }
+}
+
+class _error_view extends StatelessWidget{
+  const _error_view({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('No se declaro ningun tipo de usuario')
+        ],
       ),
     );
   }

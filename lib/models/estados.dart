@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Estados {
-  int? e_id;
+  dynamic? e_id;
   String? e_codigo;
   String e_descipcion;
 
