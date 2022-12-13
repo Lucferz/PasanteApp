@@ -7,10 +7,10 @@ class Postulaciones {
 postulaciones filtradas por su usuario y las empresas pueden ver todas
 las postulaciones por el codigo unico de la convocatoria*/
   dynamic? pos_id;
-  PersonasParticulares fk_persona;
-  Convocatorias fk_convocatoria;
+  int fk_persona;
+  int fk_convocatoria;
   String pos_codigo;
-  Estados pos_estado;
+  int pos_estado;
   var pos_fecha_c;
   var pos_fecha_mod;
 

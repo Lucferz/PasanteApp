@@ -58,17 +58,17 @@ class RegisterViewEmpresa extends StatelessWidget {
 }
 
 class RegisterViewPersonal extends StatelessWidget {
-  final PersonasParticulares newPersonaParticular;
+  final Personas newPersona;
   const RegisterViewPersonal({
     Key? key,
-    required this.newPersonaParticular
+    required this.newPersona
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: _register_persona_optional(newPersonaParticular: newPersonaParticular),
+        child: _register_persona_optional(newPersona: newPersona),
       ),
     );
   }
@@ -125,6 +125,13 @@ class _register_view1 extends StatelessWidget {
                       labelText: "Correo Electronico",
                       prefixIcon: Icons.alternate_email_sharp,
                     ),
+                    validator: (value) {
+                      String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+            
+                      RegExp regExp  = new RegExp(pattern);
+            
+                      return regExp.hasMatch(value?? '') ? null : 'Porfavor ingrese una direccion de correo electronico valida';
+                    },
                     controller: emailController,
                   ),
                   SizedBox(height: 35,),
@@ -137,6 +144,10 @@ class _register_view1 extends StatelessWidget {
                       labelText: "Contraseña",
                       prefixIcon: Icons.lock,
                     ),
+                    validator: (value) {
+                      if (value != null && value.length >=6) return null;
+                      return 'La Contraseña debe ser mayor a 6 caracteres';
+                    },
                     controller: passController,
                   ),
                   SizedBox(height: 35,),
@@ -160,20 +171,23 @@ class _register_view1 extends StatelessWidget {
               NextBtnFunc: () {
                 String email = emailController.text;
                 String pass;
-                var newPerson;
                 if (passController.text == passVerifyController.text){
                   pass = passController.text;
-                  newPerson= Personas(per_email: email, per_senha: pass);
-                }
-                print('Va al segundo paso del Registro');
+                  var newPerson= Personas(per_email: email, per_senha: pass);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => RegisterViewSecondStep(newPerson: newPerson),
                     ),
                   );
-                },
-              ),
+                }else{
+                  passController.text = '';
+                  passVerifyController.text = '';
+                  NotificationService.shawnSnakbar('Las contraseñas no coinciden, intente de nuevo');
+                }
+                
+              },
+            ),
           ],
         ),
       ),
@@ -242,17 +256,11 @@ class _register_view2 extends State<Register_view2> {
               if (_datosDelRadio != null) {
                 print(_datosDelRadio);
                 if(_datosDelRadio == DatosDelRadio.Personal){
-                  PersonasParticulares particular = PersonasParticulares(
-                    fk_persona: newPerson, 
-                    fk_per_tipo: PersonasTipo(pt_tipo: "usuario particular", 
-                    pt_id:1 )
-                  );
-
                   print('Se registro como persona');
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => RegisterViewPersonal(newPersonaParticular: particular),
+                      builder: (context) => RegisterViewPersonal(newPersona: newPerson),
                     ),
                   );
                   
@@ -277,12 +285,12 @@ class _register_view2 extends State<Register_view2> {
 }
 //Para una nueva version, ahora ya es suficiente si dice que es una persona
 class _register_persona_optional extends StatelessWidget {
-  final PersonasParticulares newPersonaParticular;
+  final Personas newPersona;
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   _register_persona_optional({
     Key? key,
-    required this.newPersonaParticular
+    required this.newPersona
   });
 
 
@@ -335,17 +343,17 @@ class _register_persona_optional extends StatelessWidget {
             //SizedBox(height: ,),
             NavigationBtns(NextBtnFunc: () async {
                 print('Se registro como persona');
-                newPersonaParticular.fk_persona.per_telefono = phoneController.text;
-                newPersonaParticular.fk_persona.per_nombre = nameController.text;
-                print(newPersonaParticular.toMap());
+                newPersona.per_telefono = phoneController.text;
+                newPersona.per_nombre = nameController.text;
+                print(newPersona.toMap());
                 final authService = Provider.of<AuthService>(context, listen: false);
                 if(nameController.text != null && phoneController.text != null){
-                  final String? errMsg = await authService.createUser(newPersonaParticular);
+                  final String? errMsg = await authService.createUser(newPersona);
                   if ( errMsg == null){
                     Navigator.popAndPushNamed(
                       context, 
                       'feed', 
-                      arguments: newPersonaParticular
+                      arguments: newPersona
                     );
                   } 
                 }

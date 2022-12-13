@@ -3,8 +3,8 @@ import 'package:pasante_app/models/models.dart';
 
 class PersonasEmpresas {
   dynamic? peremp_id;
-  Personas fk_persona;
-  PersonasTipo fk_per_tipo;
+  int fk_persona;
+  int fk_per_tipo;
   Map<String, dynamic> peremp_teconologias;
 
   PersonasEmpresas({
@@ -26,8 +26,8 @@ class PersonasEmpresas {
 
   Map <String, dynamic> toMap() => {
     "peremp_id": this.peremp_id,
-    "fk_persona": this.fk_persona.toMap(),
-    "fk_per_tipo": this.fk_per_tipo.toMap(),
+    "fk_persona": this.fk_persona,
+    "fk_per_tipo": this.fk_per_tipo,
     "peremp_teconologias":this.peremp_teconologias ,
   };
 

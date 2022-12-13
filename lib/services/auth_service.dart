@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:pasante_app/models/models.dart';
 
 class AuthService extends ChangeNotifier{
   final String _baseUrl='identitytoolkit.googleapis.com';
@@ -10,9 +11,9 @@ class AuthService extends ChangeNotifier{
   final storage = new FlutterSecureStorage();
 
 
-  Future<String?> createUser(dynamic object) async {
-    final String email = object.fk_persona.per_email;
-    final String password = object.fk_persona.per_senha;
+  Future<String?> createUser(Personas per) async {
+    final String email = per.per_email;
+    final String password = per.per_senha;
     final Map<String, dynamic> authData = {
       'email' : email, 
       'password' : password

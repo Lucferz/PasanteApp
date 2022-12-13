@@ -5,16 +5,19 @@ import 'package:provider/provider.dart';
 
 class FeedView extends StatelessWidget {
   //const FeedView({Key? key}) : super(key: key);
-  final dynamic theUser;
+  final Personas? theUser;
   String? tipo_user;
   FeedView({
     super.key,
-    required this.theUser, 
-  }): tipo_user = theUser?.fk_per_tipo?.pt_tipo;
+    this.theUser, 
+  }): tipo_user = null;//tipo_user = theUser?.fk_per_tipo?.pt_tipo;
 
 
   @override
   Widget build(BuildContext context) {
+    //se va a cambiar toda la interaccion con la base de datos a partir de ahora, dejar eso de momento, y centrarse en el disenho
+    //var perpar = PersonaParticularService.getPersonaByPerId(theUser);
+
     return SafeArea(
       child:tipo_user == 'particular'? _feed_view_particular():tipo_user == 'empresa'?_feed_view_empresarial(): _error_view(),
     );

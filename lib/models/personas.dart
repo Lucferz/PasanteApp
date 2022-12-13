@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class Personas {
 
-  dynamic? per_id;
+  int? per_id;
   String? per_nombre;
   String per_email;
   String per_senha;
@@ -45,17 +45,18 @@ class Personas {
     per_estado: json['per_estado']=='true' || json['per_estado']==null || json['per_estado']=='null'? true:false,
   );
 
-  Map <String, dynamic> toMap() => {
-    "per_id": this.per_id,
-    "per_nombre": this.per_nombre,
-    "per_email": this.per_email,
-    "per_senha":this.per_senha ,
-    "per_usuario": this.per_usuario,
-    "per_bio": this.per_bio,
-    "per_barrio": this.per_barrio,
-    "per_telefono": this.per_telefono,
-    "per_website": this.per_website,
-    "per_estado": this.per_estado,
+  Map <int?, dynamic> toMap() => {
+    per_id:{
+      "per_nombre": this.per_nombre,
+      "per_email": this.per_email,
+      "per_senha":this.per_senha ,
+      "per_usuario": this.per_usuario,
+      "per_bio": this.per_bio,
+      "per_barrio": this.per_barrio,
+      "per_telefono": this.per_telefono,
+      "per_website": this.per_website,
+      "per_estado": this.per_estado,
+    }
   };
 
 

@@ -28,9 +28,10 @@ class MyApp extends StatelessWidget {
       initialRoute: 'login',
       routes: {
         'login':( _ ) => LoginView(),
-        'feed':( _ ) => FeedView(theUser: null),
+        'feed':( _ ) => FeedView(),
         'register_step1': (context) => RegisterViewFirstStep(),
       },
+      scaffoldMessengerKey: NotificationService.messageKey,
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.grey[200],
       ),

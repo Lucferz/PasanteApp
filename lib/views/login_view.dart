@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pasante_app/providers/providers.dart';
 import 'package:pasante_app/services/services.dart';
 import 'package:provider/provider.dart';
 
@@ -12,25 +13,24 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: _loginForm(),
+        child:ChangeNotifierProvider(
+          create: (context) => LoginFormProvider(),
+          child: _loginForm(),
+        )
       ),
     );
   }
 }
 
-class _loginForm extends StatefulWidget {
-  @override
-  State<_loginForm> createState() => _loginFormState();
-}
+class _loginForm extends StatelessWidget {
 
-class _loginFormState extends State<_loginForm> {
-  //const _loginForm({Key? key}) : super(key: key);
-  final emailController = TextEditingController();
-  final passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final loginForm = Provider.of<LoginFormProvider>(context);
     return Container(
       child: Form(
+        key: loginForm.formkey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -54,7 +54,14 @@ class _loginFormState extends State<_loginForm> {
                       labelText: "Correo Electronico",
                       prefixIcon: Icons.alternate_email_sharp,
                     ),
-                    controller: emailController,
+                    onChanged: (value) => loginForm.email = value,
+                    validator: (value) {
+                      String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+            
+                      RegExp regExp  = new RegExp(pattern);
+            
+                      return regExp.hasMatch(value?? '') ? null : 'Porfavor ingrese una direccion de correo electronico valida';
+                    }
                   ),
                   SizedBox(height: 35,),
                   TextFormField(
@@ -66,7 +73,11 @@ class _loginFormState extends State<_loginForm> {
                       labelText: "Contraseña",
                       prefixIcon: Icons.lock,
                     ),
-                    controller: passController,
+                    onChanged: (value) => loginForm.password = value,
+                    validator: (value) {
+                      if (value != null && value.length >=6) return null;
+                      return 'La Contraseña debe ser mayor a 6 caracteres';
+                    },
                   ),
                 ],
               ),
@@ -78,19 +89,30 @@ class _loginFormState extends State<_loginForm> {
                 child: Column(
                   children: [
                     MaterialButton(
-                      onPressed: () async {
+                      onPressed:loginForm.isLoading?null: () async {
+                        FocusScope.of(context).unfocus();
                         final authService = Provider.of<AuthService>(context, listen: false);
-                        if (emailController.text != null && passController.text != null){
-                          final String? errMsg = await authService.login(emailController.text, passController.text);
-                          // final Personas person = personaService.getPersonaByEmail(emailController.text);
+
+                        if(!loginForm.isValidForm()){
+                          print(loginForm.isValidForm());
+                          return null;
+                        }
+                        loginForm.isLoading = true;
+                        final String? errMsg = await authService.login(loginForm.email, loginForm.password);
+                        print('El errMs es: $errMsg');
+                        if(errMsg == null){
+                          // final Personas person = personaService.getPersonaByEmail(loginForm.email);
                           // final dynamic theUser = personaService.getUserByPersona(person);
-                          if ( errMsg == null){
-                            Navigator.popAndPushNamed(
+                          Navigator.popAndPushNamed(
                               context, 
                               'feed', 
                               // arguments: theUser
-                            );
-                          }
+                              arguments: null
+                          );
+                        }else{
+                          NotificationService.shawnSnakbar(errMsg);
+                          print(errMsg);
+                          loginForm.isLoading = false;
                         }
                       },
                       shape: RoundedRectangleBorder(

@@ -4,13 +4,13 @@ import 'package:pasante_app/models/models.dart';
 
 class Convocatorias {
   dynamic? conv_id;
-  PersonasEmpresas fk_empresa;
-  List<Categorias> fk_categoria;
+  int fk_empresa;
+  List<int> fk_categoria;
   String conv_nombre;
   String conv_descripcion;
   var conv_fecha_c;
   var conv_fecha_mod;
-  Estados conv_estado;
+  int conv_estado;
 
   Convocatorias ({
     this.conv_id,
@@ -36,7 +36,7 @@ class Convocatorias {
   Map <String, dynamic> toMap() => {
     "conv_id": this.conv_id,
     "fk_empresa": this.fk_empresa,
-    "fk_categoria": this.fk_categoria,//.forEach((element) { element.toMap();}),
+    "fk_categoria": this.fk_categoria,
     "conv_nombre": this.conv_nombre,
     "conv_descripcion":this.conv_descripcion ,
     "conv_estado": this.conv_estado,
