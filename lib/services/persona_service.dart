@@ -28,7 +28,7 @@ class PersonaService extends ChangeNotifier{
 
     productsMap.forEach((key, value) {
       final tempPer = Personas.fromMap(value);
-      tempPer.per_id=key;
+      tempPer.per_id= int.parse(key);
       this.personas.add(tempPer);
     });
 
@@ -63,7 +63,7 @@ class PersonaService extends ChangeNotifier{
     final index = this.personas.indexWhere((element)=>element.per_id == per.per_id);
     this.personas[index] = per;
 
-    return per.per_id!;
+    return per.per_nombre!;
   }
 
   Future<String> createPersona( Personas per) async{
@@ -78,7 +78,7 @@ class PersonaService extends ChangeNotifier{
 
     this.personas.add(per);
 
-    return per.per_id!;
+    return per.per_nombre!;
   }
 
   Future<Personas> getPersonaByEmail (String email) async{

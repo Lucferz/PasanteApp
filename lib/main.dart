@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: 'login',
+      initialRoute: 'feed',
       routes: {
         'login':( _ ) => LoginView(),
         'feed':( _ ) => FeedView(),
