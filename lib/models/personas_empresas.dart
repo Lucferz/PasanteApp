@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'package:pasante_app/models/personas.dart';
-import 'package:pasante_app/models/personas_tipo.dart';
+import 'package:pasante_app/models/models.dart';
 
 class PersonasEmpresas {
   int? peremp_id;

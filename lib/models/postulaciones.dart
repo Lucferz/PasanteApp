@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:pasante_app/models/convocatorias.dart';
-import 'package:pasante_app/models/estados.dart';
-import 'package:pasante_app/models/personas_particulares.dart';
+import 'package:pasante_app/models/models.dart';
 
 class Postulaciones {
 /* se van a ver de manera filtrada, los postulantes van a ver todas las 

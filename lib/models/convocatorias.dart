@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:pasante_app/models/categorias.dart';
-import 'package:pasante_app/models/estados.dart';
-import 'package:pasante_app/models/personas_empresas.dart';
+import 'package:pasante_app/models/models.dart';
 
 class Convocatorias {
   int? conv_id;
