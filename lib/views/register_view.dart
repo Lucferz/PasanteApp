@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:pasante_app/models/models.dart';
+import 'package:pasante_app/services/services.dart';
 import 'package:pasante_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 import '/ui/input_decoration.dart';
 
-class RegisterViewFirstStep extends StatelessWidget {
+class RegisterViewFirstStep extends StatefulWidget {
+  @override
+  State<RegisterViewFirstStep> createState() => _RegisterViewFirstStepState();
+}
+
+class _RegisterViewFirstStepState extends State<RegisterViewFirstStep> {
   //const RegisterViewFirstStep({Key? key}) : super(key: key);
 
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+  final passVerifyController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: _register_view1(),
+        child: _register_view1(emailController: emailController, passController: passController, passVerifyController: passVerifyController),
       ),
     );
   }
@@ -17,12 +28,17 @@ class RegisterViewFirstStep extends StatelessWidget {
 
 class RegisterViewSecondStep extends StatelessWidget {
   //const RegisterViewSecondStep({Key? key}) : super(key: key);
-
+  final dynamic newPerson;
+  
+  const RegisterViewSecondStep({
+    Key? key,
+    required this.newPerson
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Register_view2(),
+        child: Register_view2(newPerson: newPerson),
       ),
     );
   }
@@ -42,25 +58,45 @@ class RegisterViewEmpresa extends StatelessWidget {
 }
 
 class RegisterViewPersonal extends StatelessWidget {
-  const RegisterViewPersonal({Key? key}) : super(key: key);
+  final Personas newPersona;
+  const RegisterViewPersonal({
+    Key? key,
+    required this.newPersona
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: _register_persona_optional(),
+        child: _register_persona_optional(newPersona: newPersona),
       ),
     );
   }
 }
 
 class Register_view2 extends StatefulWidget {
+  final dynamic newPerson;
+  
+  const Register_view2({
+    Key? key,
+    required this.newPerson
+  });
+  
     @override
-    State<Register_view2> createState() => _register_view2();
+    State<Register_view2> createState() => _register_view2(newPerson: newPerson);
 }
 
 class _register_view1 extends StatelessWidget {
-  const _register_view1({Key? key}) : super(key: key);
+  final TextEditingController emailController;
+  final TextEditingController passController;
+  final TextEditingController passVerifyController;
+  const _register_view1({
+    Key? key,
+    required this.emailController,
+    required this.passController,
+    required this.passVerifyController
+
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +125,14 @@ class _register_view1 extends StatelessWidget {
                       labelText: "Correo Electronico",
                       prefixIcon: Icons.alternate_email_sharp,
                     ),
+                    validator: (value) {
+                      String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+            
+                      RegExp regExp  = new RegExp(pattern);
+            
+                      return regExp.hasMatch(value?? '') ? null : 'Porfavor ingrese una direccion de correo electronico valida';
+                    },
+                    controller: emailController,
                   ),
                   SizedBox(height: 35,),
                   TextFormField(
@@ -100,6 +144,11 @@ class _register_view1 extends StatelessWidget {
                       labelText: "Contraseña",
                       prefixIcon: Icons.lock,
                     ),
+                    validator: (value) {
+                      if (value != null && value.length >=6) return null;
+                      return 'La Contraseña debe ser mayor a 6 caracteres';
+                    },
+                    controller: passController,
                   ),
                   SizedBox(height: 35,),
                   TextFormField(
@@ -112,6 +161,7 @@ class _register_view1 extends StatelessWidget {
                       labelText: "Confirmar Contraseña",
                       prefixIcon: Icons.lock,
                     ),
+                    controller: passVerifyController,
                   ),
                 ],
               ),
@@ -119,15 +169,25 @@ class _register_view1 extends StatelessWidget {
             //SizedBox(height: ,),
             NavigationBtns(
               NextBtnFunc: () {
-                print('Va al segundo paso del Registro');
+                String email = emailController.text;
+                String pass;
+                if (passController.text == passVerifyController.text){
+                  pass = passController.text;
+                  var newPerson= Personas(per_email: email, per_senha: pass);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => RegisterViewSecondStep(),
+                      builder: (context) => RegisterViewSecondStep(newPerson: newPerson),
                     ),
                   );
-                },
-              ),
+                }else{
+                  passController.text = '';
+                  passVerifyController.text = '';
+                  NotificationService.shawnSnakbar('Las contraseñas no coinciden, intente de nuevo');
+                }
+                
+              },
+            ),
           ],
         ),
       ),
@@ -137,6 +197,11 @@ class _register_view1 extends StatelessWidget {
 
 class _register_view2 extends State<Register_view2> {
   DatosDelRadio? _datosDelRadio;
+  final dynamic newPerson;
+  
+  _register_view2({
+    required this.newPerson
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +260,7 @@ class _register_view2 extends State<Register_view2> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => RegisterViewPersonal(),
+                      builder: (context) => RegisterViewPersonal(newPersona: newPerson),
                     ),
                   );
                   
@@ -220,7 +285,15 @@ class _register_view2 extends State<Register_view2> {
 }
 //Para una nueva version, ahora ya es suficiente si dice que es una persona
 class _register_persona_optional extends StatelessWidget {
-  const _register_persona_optional({Key? key}) : super(key: key);
+  final Personas newPersona;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  _register_persona_optional({
+    Key? key,
+    required this.newPersona
+  });
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -249,6 +322,7 @@ class _register_persona_optional extends StatelessWidget {
                       labelText: "Nombre",
                       prefixIcon: Icons.person,
                     ),
+                    controller: nameController,
                   ),
                   SizedBox(height: 35,),
                   TextFormField(
@@ -261,13 +335,28 @@ class _register_persona_optional extends StatelessWidget {
                       labelText: "Telefono de contacto",
                       prefixIcon: Icons.phone_android,
                     ),
+                    controller: phoneController,
                   ),
                 ],
               ),
             ),
             //SizedBox(height: ,),
-            NavigationBtns(NextBtnFunc: () {
+            NavigationBtns(NextBtnFunc: () async {
                 print('Se registro como persona');
+                newPersona.per_telefono = phoneController.text;
+                newPersona.per_nombre = nameController.text;
+                print(newPersona.toMap());
+                final authService = Provider.of<AuthService>(context, listen: false);
+                if(nameController.text != null && phoneController.text != null){
+                  final String? errMsg = await authService.createUser(newPersona);
+                  if ( errMsg == null){
+                    Navigator.popAndPushNamed(
+                      context, 
+                      'feed', 
+                      arguments: newPersona
+                    );
+                  } 
+                }
                 //funcion de registro con algun parametro que indique que se trata de una persona async
               },
               nextBtnText: "Crear",

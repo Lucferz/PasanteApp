@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Categorias {
-  int? cat_id;
+  dynamic? cat_id;
   String cat_nombre;
 
   Categorias({

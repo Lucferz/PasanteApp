@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:pasante_app/models/models.dart';
 
 class Convocatorias {
-  int? conv_id;
-  PersonasEmpresas fk_empresa;
-  List<Categorias> fk_categoria;
+  dynamic? conv_id;
+  int fk_empresa;
+  List<int> fk_categoria;
   String conv_nombre;
   String conv_descripcion;
   var conv_fecha_c;
   var conv_fecha_mod;
-  Estados conv_estado;
+  int conv_estado;
 
   Convocatorias ({
     this.conv_id,

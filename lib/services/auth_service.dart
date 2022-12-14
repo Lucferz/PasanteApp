@@ -3,12 +3,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:pasante_app/models/models.dart';
 
 class AuthService extends ChangeNotifier{
   final String _baseUrl='identitytoolkit.googleapis.com';
   final String _firebaseToken = 'AIzaSyA4sqQ7iAwh4OE3Dlbx_B1HYA83qSTy8W4';
   final storage = new FlutterSecureStorage();
-  Future<String?> createUser(String email, String password) async{
+
+
+  Future<String?> createUser(Personas per) async {
+    final String email = per.per_email;
+    final String password = per.per_senha;
     final Map<String, dynamic> authData = {
       'email' : email, 
       'password' : password

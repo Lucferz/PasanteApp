@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:pasante_app/models/models.dart';
 
 class PersonasEmpresas {
-  int? peremp_id;
-  Personas fk_persona;
-  PersonasTipo fk_per_tipo;
+  dynamic? peremp_id;
+  int fk_persona;
+  int fk_per_tipo;
   Map<String, dynamic> peremp_teconologias;
 
   PersonasEmpresas({
