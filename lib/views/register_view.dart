@@ -327,7 +327,7 @@ class _register_persona_optional extends StatelessWidget {
                   SizedBox(height: 35,),
                   TextFormField(
                     autocorrect: false,
-                    obscureText: true,
+                    obscureText: false,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecorations.authInputDecoration(
                       //hintText: "MiContraseña", 

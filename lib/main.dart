@@ -1,10 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pasante_app/firebase_options.dart';
 import 'package:pasante_app/services/services.dart';
 import 'package:pasante_app/views/views.dart';
 import 'package:provider/provider.dart';
  
-void main() => runApp(AppState());
- 
+void main() {
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(AppState());
+}
 
 class AppState extends StatelessWidget {
    const AppState({Key? key}) : super(key: key);
@@ -24,8 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      initialRoute: 'feed',
+      title: 'Pasante App',
+      initialRoute: 'login',
       routes: {
         'login':( _ ) => LoginView(),
         'feed':( _ ) => FeedView(),

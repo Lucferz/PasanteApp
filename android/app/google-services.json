@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1041570751309",
+    "project_id": "pasante-app",
+    "storage_bucket": "pasante-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041570751309:android:f3566938f3c7f42a5d0d04",
+        "android_client_info": {
+          "package_name": "com.example.pasante_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041570751309-7j4lb64n5rcvc9nop5ag0m71ht4jjift.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCA1cZog8D_2UVc1FzW8es3yO4JhNudow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041570751309-7j4lb64n5rcvc9nop5ag0m71ht4jjift.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
