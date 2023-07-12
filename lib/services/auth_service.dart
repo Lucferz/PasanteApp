@@ -8,7 +8,7 @@ import 'package:pasante_app/models/models.dart';
 
 class AuthService extends ChangeNotifier{
   final String _baseUrl='identitytoolkit.googleapis.com';
-  final String _firebaseToken = 'AIzaSyA4sqQ7iAwh4OE3Dlbx_B1HYA83qSTy8W4';
+  final String _firebaseToken = 'put_yours_in_env';
   final storage = new FlutterSecureStorage();
   final _auth = FirebaseAuth.instance;
 
